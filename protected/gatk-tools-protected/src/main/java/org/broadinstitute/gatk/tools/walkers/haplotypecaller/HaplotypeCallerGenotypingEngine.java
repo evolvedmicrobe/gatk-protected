@@ -287,7 +287,7 @@ public class HaplotypeCallerGenotypingEngine extends GenotypingEngine<AssemblyBa
 
                 final VariantContext call = calculateGenotypes(new VariantContextBuilder(mergedVC).alleles(readAlleleLikelihoods.alleles()).genotypes(genotypes).make(), calculationModel);
                 if ( call != null ) {
-                    final VariantContext annotatedCall = annotateCall(readLikelihoods,
+                    VariantContext annotatedCall = annotateCall(readLikelihoods,
                                                                       perSampleFilteredReadList,
                                                                       ref,
                                                                       refLoc,
@@ -300,6 +300,8 @@ public class HaplotypeCallerGenotypingEngine extends GenotypingEngine<AssemblyBa
                                                                       readAlleleLikelihoods,
                                                                       someAllelesWereDropped,
                                                                       call);
+                    // TODO: Really not sure of the side effects of this... maybe call earlier/later/elsewhere?
+                    annotatedCall =  GATKVariantContextUtils.trimAlleles(annotatedCall, true, true);
                     returnCalls.add( annotatedCall );
                 }
             }
