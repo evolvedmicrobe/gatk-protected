@@ -720,7 +720,7 @@ public class HaplotypeCaller extends ActiveRegionWalker<List<VariantContext>, In
         // create our likelihood calculation engine
         likelihoodCalculationEngine = createLikelihoodCalculationEngine();
 
-        final MergeVariantsAcrossHaplotypes variantMerger = new MergeVariantsAcrossHaplotypes();
+        final MergeVariantsAcrossHaplotypes variantMerger = new MergeOverlappingVariants();
 
         genotypingEngine.setCrossHaplotypeEventMerger(variantMerger);
 
@@ -1286,7 +1286,6 @@ public class HaplotypeCaller extends ActiveRegionWalker<List<VariantContext>, In
             }
         }
         activeRegion.removeAll( readsToRemove );
-
     }
 
     /**
